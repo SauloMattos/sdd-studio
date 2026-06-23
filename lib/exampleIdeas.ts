@@ -1,30 +1,29 @@
-import type { TaskType } from "@/types/sdd";
+import type { TaskType, UserProfile } from "@/types/sdd";
 
 export interface ExampleIdea {
   title: string;
   idea: string;
   taskType: TaskType;
+  userProfile: UserProfile;
 }
 
 export const EXAMPLE_IDEAS: ReadonlyArray<ExampleIdea> = [
   {
-    title: "Login com Google",
+    title: "Primeira tela de login",
     taskType: "feature",
-    idea: "Adicionar login com Google a um app Next.js usando NextAuth. Usuários deslogados não devem acessar /dashboard, e a implementação deve incluir critérios de aceite e passos de validação.",
+    userProfile: "beginner",
+    idea: "Quero criar minha primeira tela de login em React, com email, senha e uma mensagem de erro simples quando os campos estiverem vazios.",
   },
   {
-    title: "Separar componente",
+    title: "Refatorar componente React",
     taskType: "refactor",
-    idea: "Refatorar um componente React grande que mistura busca de dados, estado de formulário e lógica de renderização. Separar em componentes menores sem alterar o comportamento.",
+    userProfile: "experienced",
+    idea: "Quero refatorar um componente React grande que mistura fetch, estado de formulário e renderização, sem alterar o comportamento atual.",
   },
   {
-    title: "Testes de total do pedido",
-    taskType: "test",
-    idea: "Criar testes unitários para uma função que calcula totais de pedidos, incluindo descontos, impostos, carrinhos vazios e entradas inválidas.",
-  },
-  {
-    title: "Bug de envio duplo",
-    taskType: "bugfix",
-    idea: "Corrigir um bug no checkout em que usuários conseguem enviar o formulário de pagamento duas vezes ao clicar duas vezes no botão de envio.",
+    title: "Controle de gastos",
+    taskType: "feature",
+    userProfile: "common",
+    idea: "Quero criar um app simples para controlar meus gastos do mês, com cadastro de despesas, categorias e um resumo mensal.",
   },
 ];

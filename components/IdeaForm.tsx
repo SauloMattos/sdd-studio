@@ -89,6 +89,7 @@ export function IdeaForm() {
       ...prev,
       idea: example.idea,
       taskType: example.taskType,
+      userProfile: example.userProfile,
     }));
     setSpec(null);
     setGenerationError(null);

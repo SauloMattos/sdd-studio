@@ -1,6 +1,7 @@
 import { CopyButton } from "@/components/CopyButton";
 import { SpecQualityPanel } from "@/components/SpecQualityPanel";
 import { evaluateSddSpec } from "@/lib/evaluateSddSpec";
+import { sddSpecToChatPrompt } from "@/lib/sddSpecToChatPrompt";
 import { sddSpecToMarkdown } from "@/lib/sddSpecToMarkdown";
 import { TASK_TYPE_LABELS, type SddSpec } from "@/types/sdd";
 
@@ -32,6 +33,7 @@ function SpecSection({ title, items, children }: SpecSectionProps) {
 
 export function SpecPreview({ spec }: SpecPreviewProps) {
   const markdown = spec ? sddSpecToMarkdown(spec) : "";
+  const chatPrompt = spec ? sddSpecToChatPrompt(spec) : "";
   const evaluation = spec ? evaluateSddSpec(spec) : null;
 
   return (
@@ -50,11 +52,18 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
                 {spec.title}
               </h2>
             </div>
-            <CopyButton
-              text={markdown}
-              label="Copiar Markdown"
-              className="w-full min-w-[8.5rem] sm:w-auto"
-            />
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              <CopyButton
+                text={chatPrompt}
+                label="Copiar para ChatGPT/Claude"
+                className="w-full min-w-[13rem] sm:w-auto"
+              />
+              <CopyButton
+                text={markdown}
+                label="Copiar Markdown"
+                className="w-full min-w-[8.5rem] sm:w-auto"
+              />
+            </div>
           </header>
 
           {evaluation ? <SpecQualityPanel evaluation={evaluation} /> : null}
