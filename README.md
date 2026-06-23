@@ -23,12 +23,10 @@ What works today:
 
 What does not exist yet:
 
-- No API routes.
 - No database.
 - No authentication.
 - No persistence.
-- No real AI provider integration.
-- No calls to OpenAI, Anthropic, or any external model provider.
+- No UI integration with the AI generation route yet.
 
 All current generation and evaluation logic runs locally and deterministically.
 
@@ -116,9 +114,10 @@ npm run test
 
 ## Environment Variables
 
-No environment variables are required for the current local-only version.
+The current UI still uses local mock generation. The backend AI route
+`POST /api/generate-spec` requires `OPENAI_API_KEY` when called.
 
-An `.env.example` file is included so future integrations can document required keys without exposing secrets.
+Do not expose `OPENAI_API_KEY` in client-side code.
 
 ## Project Structure
 
