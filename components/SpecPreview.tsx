@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/CopyButton";
+import { DownloadMarkdownButton } from "@/components/DownloadMarkdownButton";
 import { SpecQualityPanel } from "@/components/SpecQualityPanel";
 import { evaluateSddSpec } from "@/lib/evaluateSddSpec";
 import { sddSpecToChatPrompt } from "@/lib/sddSpecToChatPrompt";
@@ -62,6 +63,10 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
                 text={markdown}
                 label="Copiar Markdown"
                 className="w-full min-w-[8.5rem] sm:w-auto"
+              />
+              <DownloadMarkdownButton
+                markdown={markdown}
+                className="w-full min-w-[6.5rem] sm:w-auto"
               />
             </div>
           </header>
