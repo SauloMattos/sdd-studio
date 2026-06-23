@@ -8,23 +8,23 @@ export interface ExampleIdea {
 
 export const EXAMPLE_IDEAS: ReadonlyArray<ExampleIdea> = [
   {
-    title: "Google login",
+    title: "Login com Google",
     taskType: "feature",
-    idea: "Add Google login to a Next.js app using NextAuth. Logged-out users should not access /dashboard, and the implementation should include acceptance criteria and validation steps.",
+    idea: "Adicionar login com Google a um app Next.js usando NextAuth. Usuários deslogados não devem acessar /dashboard, e a implementação deve incluir critérios de aceite e passos de validação.",
   },
   {
-    title: "Split component",
+    title: "Separar componente",
     taskType: "refactor",
-    idea: "Refactor a large React component that mixes data fetching, form state, and rendering logic. Split it into smaller components without changing behavior.",
+    idea: "Refatorar um componente React grande que mistura busca de dados, estado de formulário e lógica de renderização. Separar em componentes menores sem alterar o comportamento.",
   },
   {
-    title: "Order total tests",
+    title: "Testes de total do pedido",
     taskType: "test",
-    idea: "Create unit tests for a function that calculates order totals, including discounts, taxes, empty carts, and invalid input.",
+    idea: "Criar testes unitários para uma função que calcula totais de pedidos, incluindo descontos, impostos, carrinhos vazios e entradas inválidas.",
   },
   {
-    title: "Double submit bug",
+    title: "Bug de envio duplo",
     taskType: "bugfix",
-    idea: "Fix a checkout bug where users can submit the payment form twice by double-clicking the submit button.",
+    idea: "Corrigir um bug no checkout em que usuários conseguem enviar o formulário de pagamento duas vezes ao clicar duas vezes no botão de envio.",
   },
 ];

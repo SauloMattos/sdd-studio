@@ -152,25 +152,35 @@ function buildSuggestions(
   const suggestions: string[] = [];
 
   if (scope === "Large") {
-    suggestions.push("Split the spec into a smaller first implementation slice.");
+    suggestions.push("Divida a spec em um primeiro recorte de implementação menor.");
   } else if (scope === "Medium") {
-    suggestions.push("Check whether one goal or implementation step can be deferred.");
+    suggestions.push(
+      "Verifique se algum objetivo ou passo de implementação pode ser adiado.",
+    );
   }
 
   if (tokenEfficiency !== "High") {
-    suggestions.push("Shorten suggested prompts so each one asks for one concrete action.");
+    suggestions.push(
+      "Encurte os prompts sugeridos para que cada um peça uma ação concreta.",
+    );
   }
 
   if (clarity !== "High") {
-    suggestions.push("Add clearer goals, non-goals, or risks before handing this to an agent.");
+    suggestions.push(
+      "Adicione objetivos, itens fora de escopo ou riscos mais claros antes de enviar a um agente.",
+    );
   }
 
   if (validationReadiness !== "High") {
-    suggestions.push("Add acceptance criteria and test checklist items that can be verified locally.");
+    suggestions.push(
+      "Adicione critérios de aceite e itens de checklist que possam ser verificados localmente.",
+    );
   }
 
   if (spec.risksAndEdgeCases.length === 0) {
-    suggestions.push("Include at least one risk or edge case before implementation.");
+    suggestions.push(
+      "Inclua pelo menos um risco ou caso de borda antes da implementação.",
+    );
   }
 
   return suggestions.slice(0, 4);

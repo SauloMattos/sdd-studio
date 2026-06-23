@@ -13,16 +13,24 @@ export type TaskType =
   | "test"
   | "documentation";
 
+export const TASK_TYPE_LABELS: Record<TaskType, string> = {
+  feature: "Funcionalidade",
+  bugfix: "Correção de bug",
+  refactor: "Refatoração",
+  test: "Teste",
+  documentation: "Documentação",
+};
+
 /** Human-friendly labels for each TaskType, useful for selects/UI. */
 export const TASK_TYPE_OPTIONS: ReadonlyArray<{
   value: TaskType;
   label: string;
 }> = [
-  { value: "feature", label: "Feature" },
-  { value: "bugfix", label: "Bugfix" },
-  { value: "refactor", label: "Refactor" },
-  { value: "test", label: "Test" },
-  { value: "documentation", label: "Documentation" },
+  { value: "feature", label: TASK_TYPE_LABELS.feature },
+  { value: "bugfix", label: TASK_TYPE_LABELS.bugfix },
+  { value: "refactor", label: TASK_TYPE_LABELS.refactor },
+  { value: "test", label: TASK_TYPE_LABELS.test },
+  { value: "documentation", label: TASK_TYPE_LABELS.documentation },
 ];
 
 /** What the user provides: the raw idea plus the chosen task type. */

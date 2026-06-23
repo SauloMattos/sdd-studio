@@ -35,7 +35,7 @@ describe("evaluateSddSpec", () => {
 
     expect(evaluation.suggestions.length).toBeGreaterThan(0);
     expect(evaluation.suggestions).toContain(
-      "Add acceptance criteria and test checklist items that can be verified locally.",
+      "Adicione critérios de aceite e itens de checklist que possam ser verificados localmente.",
     );
   });
 

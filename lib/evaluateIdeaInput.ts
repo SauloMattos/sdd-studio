@@ -213,28 +213,38 @@ export function evaluateIdeaInput(idea: string): IdeaQualityEvaluation {
   const suggestions: string[] = [];
 
   if (!hasObjective) {
-    missingInformation.push("Clear objective");
-    suggestions.push("Start with the concrete outcome this change should deliver.");
+    missingInformation.push("Objetivo claro");
+    suggestions.push(
+      "Comece pelo resultado concreto que esta mudança deve entregar.",
+    );
   }
 
   if (!hasActor) {
-    missingInformation.push("Primary user or actor");
-    suggestions.push("Name who uses the feature or who is affected by the change.");
+    missingInformation.push("Usuário ou ator principal");
+    suggestions.push(
+      "Nomeie quem usa a funcionalidade ou quem é afetado pela mudança.",
+    );
   }
 
   if (!hasTechnicalContext) {
-    missingInformation.push("Technical stack or system area");
-    suggestions.push("Mention the relevant stack, module, route, component, or service.");
+    missingInformation.push("Stack técnica ou área do sistema");
+    suggestions.push(
+      "Mencione a stack, módulo, rota, componente ou serviço relevante.",
+    );
   }
 
   if (!hasTestSignal && !hasExpectedOutcome) {
-    missingInformation.push("Validation or expected behavior");
-    suggestions.push("Add how you would test or validate the expected behavior.");
+    missingInformation.push("Validação ou comportamento esperado");
+    suggestions.push(
+      "Adicione como você testaria ou validaria o comportamento esperado.",
+    );
   }
 
   if (!hasConstraint) {
-    missingInformation.push("Constraints or non-goals");
-    suggestions.push("Add what should stay out of scope for the first implementation.");
+    missingInformation.push("Restrições ou itens fora de escopo");
+    suggestions.push(
+      "Adicione o que deve ficar fora do escopo da primeira implementação.",
+    );
   }
 
   return {

@@ -22,6 +22,6 @@ describe("generateMockSddSpec", () => {
     });
 
     expect(spec.taskType).toBe("documentation");
-    expect(spec.summary).toContain("documentation update");
+    expect(spec.summary).toContain("atualização de documentação");
   });
 });

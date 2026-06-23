@@ -1,4 +1,13 @@
-import type { IdeaQualityEvaluation } from "@/types/ideaQuality";
+import type {
+  IdeaQualityEvaluation,
+  IdeaQualityLevel,
+} from "@/types/ideaQuality";
+
+const IDEA_QUALITY_LEVEL_LABELS: Record<IdeaQualityLevel, string> = {
+  Low: "Baixa",
+  Medium: "Média",
+  High: "Alta",
+};
 
 interface IdeaQualityPanelProps {
   evaluation: IdeaQualityEvaluation;
@@ -21,16 +30,16 @@ function IdeaQualityMetric({ label, value }: IdeaQualityMetricProps) {
 export function IdeaQualityPanel({ evaluation }: IdeaQualityPanelProps) {
   return (
     <aside
-      aria-label="Idea quality evaluation"
+      aria-label="Avaliação de qualidade da ideia"
       className="space-y-4 rounded-lg border border-neutral-800 bg-neutral-900/50 p-4"
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-sm font-semibold text-neutral-100">
-            Idea Quality
+            Qualidade da ideia
           </h3>
           <p className="mt-1 text-sm text-neutral-500">
-            Local pre-flight check before generating a spec.
+            Verificação local antes de gerar uma spec.
           </p>
         </div>
         <div className="rounded-md border border-neutral-700 px-4 py-2 text-center">
@@ -42,18 +51,24 @@ export function IdeaQualityPanel({ evaluation }: IdeaQualityPanelProps) {
       </div>
 
       <dl className="grid gap-3 sm:grid-cols-3">
-        <IdeaQualityMetric label="Clarity" value={evaluation.clarity} />
         <IdeaQualityMetric
-          label="Technical Context"
-          value={evaluation.technicalContext}
+          label="Clareza"
+          value={IDEA_QUALITY_LEVEL_LABELS[evaluation.clarity]}
         />
-        <IdeaQualityMetric label="Testability" value={evaluation.testability} />
+        <IdeaQualityMetric
+          label="Contexto técnico"
+          value={IDEA_QUALITY_LEVEL_LABELS[evaluation.technicalContext]}
+        />
+        <IdeaQualityMetric
+          label="Testabilidade"
+          value={IDEA_QUALITY_LEVEL_LABELS[evaluation.testability]}
+        />
       </dl>
 
       {evaluation.missingInformation.length > 0 ? (
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-neutral-100">
-            Missing Information
+            Informações ausentes
           </h4>
           <ul className="list-disc space-y-1 pl-5 text-sm leading-6 text-neutral-300">
             {evaluation.missingInformation.map((item) => (
@@ -64,7 +79,7 @@ export function IdeaQualityPanel({ evaluation }: IdeaQualityPanelProps) {
       ) : null}
 
       <div className="space-y-2">
-        <h4 className="text-sm font-semibold text-neutral-100">Suggestions</h4>
+        <h4 className="text-sm font-semibold text-neutral-100">Sugestões</h4>
         {evaluation.suggestions.length > 0 ? (
           <ul className="list-disc space-y-1 pl-5 text-sm leading-6 text-neutral-300">
             {evaluation.suggestions.map((suggestion) => (
@@ -73,7 +88,8 @@ export function IdeaQualityPanel({ evaluation }: IdeaQualityPanelProps) {
           </ul>
         ) : (
           <p className="text-sm leading-6 text-neutral-300">
-            The idea has enough detail for a first local spec draft.
+            A ideia tem detalhes suficientes para um primeiro rascunho local de
+            spec.
           </p>
         )}
       </div>

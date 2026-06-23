@@ -1,11 +1,11 @@
 import type { SddInput, SddSpec } from "@/types/sdd";
 
 const TASK_TYPE_COPY: Record<SddInput["taskType"], string> = {
-  feature: "feature",
-  bugfix: "bugfix",
-  refactor: "refactor",
-  test: "test coverage task",
-  documentation: "documentation update",
+  feature: "funcionalidade",
+  bugfix: "correção de bug",
+  refactor: "refatoração",
+  test: "tarefa de cobertura de testes",
+  documentation: "atualização de documentação",
 };
 
 function normalizeIdea(idea: string): string {
@@ -14,7 +14,7 @@ function normalizeIdea(idea: string): string {
 
 function makeTitle(idea: string): string {
   const compactIdea = idea.length > 72 ? `${idea.slice(0, 69)}...` : idea;
-  return `SDD Spec: ${compactIdea}`;
+  return `Spec SDD: ${compactIdea}`;
 }
 
 export function generateMockSddSpec(input: SddInput): SddSpec {
@@ -24,54 +24,54 @@ export function generateMockSddSpec(input: SddInput): SddSpec {
   return {
     title: makeTitle(idea),
     taskType: input.taskType,
-    summary: `Create a focused ${taskType} for this user idea: "${idea}". This mock spec keeps the scope local and concrete so the product flow can be validated before any AI integration exists.`,
+    summary: `Criar uma ${taskType} focada para esta ideia do usuário: "${idea}". Esta spec simulada mantém o escopo local e concreto para validar o fluxo do produto antes de qualquer integração com IA.`,
     goals: [
-      "Turn the raw idea into a small, reviewable implementation target.",
-      "Keep the first iteration narrow enough for an AI coding agent to complete safely.",
-      "Make expected behavior observable through clear acceptance criteria and tests.",
+      "Transformar a ideia bruta em um alvo de implementação pequeno e revisável.",
+      "Manter a primeira iteração estreita o bastante para um agente de código concluir com segurança.",
+      "Tornar o comportamento esperado observável por critérios de aceite e testes claros.",
     ],
     nonGoals: [
-      "Do not call an external AI provider in this step.",
-      "Do not add API routes, authentication, or database persistence.",
-      "Do not expand beyond the user-entered idea until the workflow is validated.",
+      "Não chamar um provedor externo de IA nesta etapa.",
+      "Não adicionar rotas de API, autenticação ou persistência em banco de dados.",
+      "Não expandir além da ideia informada pelo usuário até que o fluxo seja validado.",
     ],
     acceptanceCriteria: [
       {
         id: "AC-1",
-        description: `The implemented work directly addresses the idea: "${idea}".`,
+        description: `O trabalho implementado atende diretamente à ideia: "${idea}".`,
       },
       {
         id: "AC-2",
         description:
-          "The change can be verified locally without external services or credentials.",
+          "A mudança pode ser verificada localmente sem serviços externos ou credenciais.",
       },
       {
         id: "AC-3",
         description:
-          "The final behavior is documented with a concise test checklist.",
+          "O comportamento final é documentado com um checklist de testes conciso.",
       },
     ],
     implementationPlan: [
-      "Identify the smallest user-facing behavior implied by the idea.",
-      "Update only the files required for that behavior.",
-      "Keep data local and deterministic for the first validation pass.",
-      "Run typecheck and a local dev-server smoke test.",
+      "Identificar o menor comportamento visível ao usuário sugerido pela ideia.",
+      "Atualizar apenas os arquivos necessários para esse comportamento.",
+      "Manter dados locais e determinísticos na primeira validação.",
+      "Rodar verificação de tipos e uma verificação rápida no servidor local de desenvolvimento.",
     ],
     suggestedAgentPrompts: [
-      `Implement the smallest local ${taskType} for: "${idea}". Do not add external services.`,
-      "Review the changed files for type safety, unnecessary scope expansion, and missing tests.",
-      "Produce a concise verification summary that maps changes back to the acceptance criteria.",
+      `Implemente a menor ${taskType} local para: "${idea}". Não adicione serviços externos.`,
+      "Revise os arquivos alterados em busca de segurança de tipos, expansão de escopo desnecessária e testes ausentes.",
+      "Produza um resumo de verificação conciso que relacione as mudanças aos critérios de aceite.",
     ],
     testChecklist: [
-      "Run npm run typecheck.",
-      "Start the app with npm run dev.",
-      "Exercise the primary form flow in the browser.",
-      "Confirm the resulting UI state matches the acceptance criteria.",
+      "Rodar npm run typecheck.",
+      "Iniciar a aplicação com npm run dev.",
+      "Exercitar o fluxo principal do formulário no navegador.",
+      "Confirmar que o estado resultante da interface atende aos critérios de aceite.",
     ],
     risksAndEdgeCases: [
-      "The idea may be too broad and need a narrower first slice.",
-      "A later AI-backed version may generate different structure than this mock output.",
-      "Very long user input should remain readable in generated sections.",
+      "A ideia pode ser ampla demais e exigir um primeiro recorte menor.",
+      "Uma versão futura com IA pode gerar uma estrutura diferente deste resultado simulado.",
+      "Entradas muito longas do usuário devem permanecer legíveis nas seções geradas.",
     ],
   };
 }

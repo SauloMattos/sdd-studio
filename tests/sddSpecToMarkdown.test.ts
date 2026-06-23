@@ -11,15 +11,15 @@ describe("sddSpecToMarkdown", () => {
     const markdown = sddSpecToMarkdown(spec);
 
     expect(markdown).toContain(`# ${spec.title}`);
-    expect(markdown).toContain("**Task type:** feature");
-    expect(markdown).toContain("## Summary");
-    expect(markdown).toContain("## Goals");
-    expect(markdown).toContain("## Non-goals");
-    expect(markdown).toContain("## Acceptance Criteria");
-    expect(markdown).toContain("## Implementation Plan");
-    expect(markdown).toContain("## Suggested Agent Prompts");
-    expect(markdown).toContain("## Test Checklist");
-    expect(markdown).toContain("## Risks and Edge Cases");
+    expect(markdown).toContain("**Tipo de tarefa:** Funcionalidade");
+    expect(markdown).toContain("## Resumo");
+    expect(markdown).toContain("## Objetivos");
+    expect(markdown).toContain("## Fora de escopo");
+    expect(markdown).toContain("## Critérios de aceite");
+    expect(markdown).toContain("## Plano de implementação");
+    expect(markdown).toContain("## Prompts sugeridos para agente");
+    expect(markdown).toContain("## Checklist de testes");
+    expect(markdown).toContain("## Riscos e casos de borda");
   });
 
   it("formats acceptance criteria with stable ids", () => {

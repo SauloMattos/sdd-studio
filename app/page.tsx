@@ -6,7 +6,8 @@ export default function Home() {
       <header className="space-y-3">
         <h1 className="text-4xl font-bold tracking-tight">SDD Studio</h1>
         <p className="text-lg text-neutral-400">
-          Transform vague ideas into small, testable specs for AI coding agents.
+          Transforme ideias vagas em specs pequenas, testáveis e prontas para
+          agentes de código com IA.
         </p>
       </header>
 

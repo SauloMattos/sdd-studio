@@ -48,7 +48,7 @@ export function IdeaForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-3">
         <label htmlFor="idea" className="block text-sm font-medium">
-          Your idea
+          Sua ideia
         </label>
         <textarea
           id="idea"
@@ -58,7 +58,7 @@ export function IdeaForm() {
           onChange={(e) =>
             setInput((prev) => ({ ...prev, idea: e.target.value }))
           }
-          placeholder="Describe the software idea you have in mind..."
+          placeholder="Descreva a ideia de software que você tem em mente..."
           className="w-full resize-y rounded-lg border border-neutral-800 bg-neutral-900 p-3 text-sm outline-none placeholder:text-neutral-600 focus:border-neutral-500"
         />
         {ideaEvaluation ? (
@@ -73,7 +73,7 @@ export function IdeaForm() {
 
       <div className="space-y-2">
         <label htmlFor="taskType" className="block text-sm font-medium">
-          Task type
+          Tipo de tarefa
         </label>
         <select
           id="taskType"
@@ -100,7 +100,7 @@ export function IdeaForm() {
         disabled={isDisabled}
         className="rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-semibold text-neutral-900 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
       >
-        Generate SDD Spec
+        Gerar Spec SDD
       </button>
 
       <SpecPreview spec={spec} />

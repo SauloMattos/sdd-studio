@@ -9,8 +9,8 @@ interface CopyButtonProps {
   className?: string;
 }
 
-const DEFAULT_LABEL = "Copy";
-const DEFAULT_COPIED_LABEL = "Copied!";
+const DEFAULT_LABEL = "Copiar";
+const DEFAULT_COPIED_LABEL = "Copiado!";
 const COPIED_RESET_DELAY_MS = 1800;
 
 export function CopyButton({

@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SDD Studio",
   description:
-    "Transform vague ideas into small, testable specs for AI coding agents.",
+    "Transforme ideias vagas em specs pequenas, testáveis e prontas para agentes de código com IA.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
         {children}
       </body>

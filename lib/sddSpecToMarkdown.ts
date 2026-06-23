@@ -1,4 +1,5 @@
 import type { AcceptanceCriterion, SddSpec } from "@/types/sdd";
+import { TASK_TYPE_LABELS } from "@/types/sdd";
 
 function bulletList(items: string[]): string {
   return items.map((item) => `- ${item}`).join("\n");
@@ -18,30 +19,30 @@ export function sddSpecToMarkdown(spec: SddSpec): string {
   return [
     `# ${spec.title}`,
     "",
-    `**Task type:** ${spec.taskType}`,
+    `**Tipo de tarefa:** ${TASK_TYPE_LABELS[spec.taskType]}`,
     "",
-    "## Summary",
+    "## Resumo",
     spec.summary,
     "",
-    "## Goals",
+    "## Objetivos",
     bulletList(spec.goals),
     "",
-    "## Non-goals",
+    "## Fora de escopo",
     bulletList(spec.nonGoals),
     "",
-    "## Acceptance Criteria",
+    "## Critérios de aceite",
     acceptanceCriteriaList(spec.acceptanceCriteria),
     "",
-    "## Implementation Plan",
+    "## Plano de implementação",
     numberedList(spec.implementationPlan),
     "",
-    "## Suggested Agent Prompts",
+    "## Prompts sugeridos para agente",
     numberedList(spec.suggestedAgentPrompts),
     "",
-    "## Test Checklist",
+    "## Checklist de testes",
     bulletList(spec.testChecklist),
     "",
-    "## Risks and Edge Cases",
+    "## Riscos e casos de borda",
     bulletList(spec.risksAndEdgeCases),
   ].join("\n");
 }

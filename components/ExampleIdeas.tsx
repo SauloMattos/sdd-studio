@@ -1,4 +1,5 @@
 import type { ExampleIdea } from "@/lib/exampleIdeas";
+import { TASK_TYPE_LABELS } from "@/types/sdd";
 
 interface ExampleIdeasProps {
   examples: ReadonlyArray<ExampleIdea>;
@@ -13,10 +14,11 @@ export function ExampleIdeas({ examples, onSelect }: ExampleIdeasProps) {
           id="example-ideas-heading"
           className="text-sm font-semibold text-neutral-100"
         >
-          Try an example
+          Teste um exemplo
         </h2>
         <p className="text-sm text-neutral-500">
-          Load a realistic starter idea, then generate the spec when ready.
+          Carregue uma ideia inicial realista e gere a spec quando estiver
+          pronto.
         </p>
       </div>
 
@@ -32,7 +34,7 @@ export function ExampleIdeas({ examples, onSelect }: ExampleIdeasProps) {
               {example.title}
             </span>
             <span className="mt-1 block text-xs font-medium uppercase text-neutral-500">
-              {example.taskType}
+              {TASK_TYPE_LABELS[example.taskType]}
             </span>
           </button>
         ))}

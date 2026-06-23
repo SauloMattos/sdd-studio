@@ -2,7 +2,7 @@ import { CopyButton } from "@/components/CopyButton";
 import { SpecQualityPanel } from "@/components/SpecQualityPanel";
 import { evaluateSddSpec } from "@/lib/evaluateSddSpec";
 import { sddSpecToMarkdown } from "@/lib/sddSpecToMarkdown";
-import type { SddSpec } from "@/types/sdd";
+import { TASK_TYPE_LABELS, type SddSpec } from "@/types/sdd";
 
 interface SpecPreviewProps {
   spec: SddSpec | null;
@@ -36,7 +36,7 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
 
   return (
     <section
-      aria-label="Spec preview"
+      aria-label="Prévia da spec"
       className="min-h-[12rem] rounded-lg border border-dashed border-neutral-800 bg-neutral-900/40 p-6"
     >
       {spec ? (
@@ -44,7 +44,7 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
           <header className="flex flex-col gap-4 border-b border-neutral-800 pb-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-2">
               <p className="text-xs font-medium uppercase text-neutral-500">
-                {spec.taskType}
+                {TASK_TYPE_LABELS[spec.taskType]}
               </p>
               <h2 className="text-xl font-semibold text-neutral-100">
                 {spec.title}
@@ -52,23 +52,23 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
             </div>
             <CopyButton
               text={markdown}
-              label="Copy Markdown"
+              label="Copiar Markdown"
               className="w-full min-w-[8.5rem] sm:w-auto"
             />
           </header>
 
           {evaluation ? <SpecQualityPanel evaluation={evaluation} /> : null}
 
-          <SpecSection title="Summary">
+          <SpecSection title="Resumo">
             <p className="text-sm leading-6 text-neutral-300">
               {spec.summary}
             </p>
           </SpecSection>
 
-          <SpecSection title="Goals" items={spec.goals} />
-          <SpecSection title="Non-goals" items={spec.nonGoals} />
+          <SpecSection title="Objetivos" items={spec.goals} />
+          <SpecSection title="Fora de escopo" items={spec.nonGoals} />
 
-          <SpecSection title="Acceptance Criteria">
+          <SpecSection title="Critérios de aceite">
             <ol className="space-y-2 text-sm leading-6 text-neutral-300">
               {spec.acceptanceCriteria.map((criterion) => (
                 <li key={criterion.id} className="grid gap-1 sm:grid-cols-[4rem_1fr]">
@@ -82,10 +82,10 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
           </SpecSection>
 
           <SpecSection
-            title="Implementation Plan"
+            title="Plano de implementação"
             items={spec.implementationPlan}
           />
-          <SpecSection title="Suggested Agent Prompts">
+          <SpecSection title="Prompts sugeridos para agente">
             <ol className="space-y-3 text-sm leading-6 text-neutral-300">
               {spec.suggestedAgentPrompts.map((prompt, index) => (
                 <li
@@ -100,22 +100,22 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
                   </p>
                   <CopyButton
                     text={prompt}
-                    label="Copy prompt"
+                    label="Copiar prompt"
                     className="w-full min-w-[6.75rem] sm:w-auto"
                   />
                 </li>
               ))}
             </ol>
           </SpecSection>
-          <SpecSection title="Test Checklist" items={spec.testChecklist} />
+          <SpecSection title="Checklist de testes" items={spec.testChecklist} />
           <SpecSection
-            title="Risks and Edge Cases"
+            title="Riscos e casos de borda"
             items={spec.risksAndEdgeCases}
           />
         </article>
       ) : (
         <div className="flex h-full min-h-[9rem] items-center justify-center text-center text-sm text-neutral-500">
-          Your generated SDD spec will appear here.
+          Sua Spec SDD gerada aparecerá aqui.
         </div>
       )}
     </section>

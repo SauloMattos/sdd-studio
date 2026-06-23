@@ -10,7 +10,7 @@ describe("evaluateIdeaInput", () => {
 
     expect(vagueIdea.score).toBeLessThan(completeIdea.score);
     expect(vagueIdea.missingInformation).toContain(
-      "Technical stack or system area",
+      "Stack técnica ou área do sistema",
     );
   });
 

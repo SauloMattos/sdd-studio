@@ -1,4 +1,20 @@
 import type { SddSpecQualityEvaluation } from "@/types/sddQuality";
+import type {
+  SddQualityLevel,
+  SddScopeClassification,
+} from "@/types/sddQuality";
+
+const QUALITY_LEVEL_LABELS: Record<SddQualityLevel, string> = {
+  Low: "Baixa",
+  Medium: "Média",
+  High: "Alta",
+};
+
+const SCOPE_LABELS: Record<SddScopeClassification, string> = {
+  Small: "Pequeno",
+  Medium: "Médio",
+  Large: "Grande",
+};
 
 interface SpecQualityPanelProps {
   evaluation: SddSpecQualityEvaluation;
@@ -21,16 +37,16 @@ function QualityMetric({ label, value }: QualityMetricProps) {
 export function SpecQualityPanel({ evaluation }: SpecQualityPanelProps) {
   return (
     <aside
-      aria-label="Spec quality evaluation"
+      aria-label="Avaliação de qualidade da spec"
       className="space-y-4 rounded-lg border border-neutral-800 bg-neutral-950/50 p-4"
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-sm font-semibold text-neutral-100">
-            Quality Evaluation
+            Qualidade da spec
           </h3>
           <p className="mt-1 text-sm text-neutral-500">
-            Local deterministic heuristics for agent readiness.
+            Heurísticas locais e determinísticas para prontidão do agente.
           </p>
         </div>
         <div className="rounded-md border border-neutral-700 px-4 py-2 text-center">
@@ -42,21 +58,24 @@ export function SpecQualityPanel({ evaluation }: SpecQualityPanelProps) {
       </div>
 
       <dl className="grid gap-3 sm:grid-cols-2">
-        <QualityMetric label="Scope" value={evaluation.scope} />
+        <QualityMetric label="Escopo" value={SCOPE_LABELS[evaluation.scope]} />
         <QualityMetric
-          label="Token Efficiency"
-          value={evaluation.tokenEfficiency}
+          label="Eficiência de tokens"
+          value={QUALITY_LEVEL_LABELS[evaluation.tokenEfficiency]}
         />
-        <QualityMetric label="Clarity" value={evaluation.clarity} />
         <QualityMetric
-          label="Validation Readiness"
-          value={evaluation.validationReadiness}
+          label="Clareza"
+          value={QUALITY_LEVEL_LABELS[evaluation.clarity]}
+        />
+        <QualityMetric
+          label="Prontidão para validação"
+          value={QUALITY_LEVEL_LABELS[evaluation.validationReadiness]}
         />
       </dl>
 
       <div className="space-y-2">
         <h4 className="text-sm font-semibold text-neutral-100">
-          Suggestions
+          Sugestões
         </h4>
         {evaluation.suggestions.length > 0 ? (
           <ul className="list-disc space-y-1 pl-5 text-sm leading-6 text-neutral-300">
@@ -66,7 +85,7 @@ export function SpecQualityPanel({ evaluation }: SpecQualityPanelProps) {
           </ul>
         ) : (
           <p className="text-sm leading-6 text-neutral-300">
-            No immediate improvements suggested by the local heuristic.
+            Nenhuma melhoria imediata sugerida pela heurística local.
           </p>
         )}
       </div>
