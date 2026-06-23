@@ -1,4 +1,8 @@
-﻿import type { SddInput, SddSpec } from "@/types/sdd";
+import {
+  DEFAULT_USER_PROFILE,
+  type LocalSddInput,
+  type SddSpec,
+} from "@/types/sdd";
 import { buildSuggestedAgentPrompts } from "@/lib/local-sdd/buildAgentPrompt";
 import { detectLocalRecipe } from "@/lib/local-sdd/detectLocalRecipe";
 import { TASK_TYPE_COPY } from "@/lib/local-sdd/localSddRecipes";
@@ -101,9 +105,10 @@ function buildRisks(recipe: LocalRecipe, isLargeScope: boolean): string[] {
   ];
 }
 
-export function generateLocalSddSpec(input: SddInput): SddSpec {
+export function generateLocalSddSpec(input: LocalSddInput): SddSpec {
   const idea = normalizeIdeaText(input.idea);
   const taskType = TASK_TYPE_COPY[input.taskType];
+  const userProfile = input.userProfile ?? DEFAULT_USER_PROFILE;
   const wordCount = idea.split(/\s+/).filter(Boolean).length;
   const recipe = detectLocalRecipe(input, idea);
   const largeScope = isLargeIdea(normalizeForSearch(idea), wordCount);
@@ -116,7 +121,12 @@ export function generateLocalSddSpec(input: SddInput): SddSpec {
     nonGoals: buildNonGoals(recipe, largeScope),
     acceptanceCriteria: buildAcceptanceCriteria(idea, recipe),
     implementationPlan: buildImplementationPlan(recipe, largeScope),
-    suggestedAgentPrompts: buildSuggestedAgentPrompts(idea, recipe, largeScope),
+    suggestedAgentPrompts: buildSuggestedAgentPrompts(
+      idea,
+      recipe,
+      largeScope,
+      userProfile,
+    ),
     testChecklist: buildTestChecklist(recipe, largeScope),
     risksAndEdgeCases: buildRisks(recipe, largeScope),
   };

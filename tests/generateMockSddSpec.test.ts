@@ -203,6 +203,46 @@ describe("generateMockSddSpec", () => {
     }
   });
 
+  it("uses the beginner profile by default for local prompts", () => {
+    const spec = generateMockSddSpec({
+      idea: "Criar uma tela de cadastro simples",
+      taskType: "feature",
+    });
+    const prompt = spec.suggestedAgentPrompts[0] ?? "";
+
+    expect(prompt).toContain("Perfil do usuário: Iniciante.");
+    expect(prompt).toContain("forma didática");
+    expect(prompt).toContain("passos simples");
+  });
+
+  it("adapts local prompts for experienced developers", () => {
+    const spec = generateMockSddSpec({
+      idea: "Criar endpoint backend para listar pedidos",
+      taskType: "feature",
+      userProfile: "experienced",
+    });
+    const prompt = spec.suggestedAgentPrompts[0] ?? "";
+
+    expect(prompt).toContain("Perfil do usuário: Dev experiente.");
+    expect(prompt).toContain("seja direto, técnico e conciso");
+    expect(prompt).toContain("resumo técnico curto");
+    expect(prompt).not.toContain("passos simples");
+  });
+
+  it("adapts local prompts for common users with simpler language", () => {
+    const spec = generateMockSddSpec({
+      idea: "Criar um aplicativo simples para organizar tarefas da casa",
+      taskType: "feature",
+      userProfile: "common",
+    });
+    const prompt = spec.suggestedAgentPrompts[0] ?? "";
+
+    expect(prompt).toContain("Perfil do usuário: Usuário comum.");
+    expect(prompt).toContain("use linguagem simples");
+    expect(prompt).toContain("evite jargões desnecessários");
+    expect(prompt).toContain("como conferir se funcionou");
+  });
+
   it("recommends running one prompt at a time for broad ideas", () => {
     const spec = generateMockSddSpec({
       idea: "Criar uma plataforma MVP completa de e-commerce com produtos, carrinho, checkout, relatórios, usuários e painel administrativo",

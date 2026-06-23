@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import {
+  DEFAULT_USER_PROFILE,
   TASK_TYPE_OPTIONS,
+  USER_PROFILE_OPTIONS,
+  type LocalSddInput,
   type SddInput,
   type SddSpec,
   type TaskType,
+  type UserProfile,
 } from "@/types/sdd";
 import { ExampleIdeas } from "@/components/ExampleIdeas";
 import { IdeaQualityPanel } from "@/components/IdeaQualityPanel";
@@ -25,6 +29,11 @@ const INITIAL_INPUT: SddInput = {
   taskType: "feature",
 };
 
+const INITIAL_LOCAL_INPUT: LocalSddInput = {
+  ...INITIAL_INPUT,
+  userProfile: DEFAULT_USER_PROFILE,
+};
+
 const GENERATION_MODE_OPTIONS: ReadonlyArray<{
   value: GenerationMode;
   label: string;
@@ -34,7 +43,7 @@ const GENERATION_MODE_OPTIONS: ReadonlyArray<{
 ];
 
 export function IdeaForm() {
-  const [input, setInput] = useState<SddInput>(INITIAL_INPUT);
+  const [input, setInput] = useState<LocalSddInput>(INITIAL_LOCAL_INPUT);
   const [spec, setSpec] = useState<SddSpec | null>(null);
   const [generationMode, setGenerationMode] =
     useState<GenerationMode>("local");
@@ -58,7 +67,11 @@ export function IdeaForm() {
     setIsGenerating(true);
 
     try {
-      const aiSpec = await requestAiSddSpec(input);
+      const aiInput: SddInput = {
+        idea: input.idea,
+        taskType: input.taskType,
+      };
+      const aiSpec = await requestAiSddSpec(aiInput);
       setSpec(aiSpec);
     } catch (error) {
       const message =
@@ -72,10 +85,11 @@ export function IdeaForm() {
   };
 
   const handleExampleSelect = (example: ExampleIdea) => {
-    setInput({
+    setInput((prev) => ({
+      ...prev,
       idea: example.idea,
       taskType: example.taskType,
-    });
+    }));
     setSpec(null);
     setGenerationError(null);
   };
@@ -134,6 +148,34 @@ export function IdeaForm() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="space-y-2">
+        <label htmlFor="userProfile" className="block text-sm font-medium">
+          Perfil
+        </label>
+        <select
+          id="userProfile"
+          name="userProfile"
+          value={input.userProfile ?? DEFAULT_USER_PROFILE}
+          onChange={(e) =>
+            setInput((prev) => ({
+              ...prev,
+              userProfile: e.target.value as UserProfile,
+            }))
+          }
+          className="w-full rounded-lg border border-neutral-800 bg-neutral-900 p-3 text-sm outline-none focus:border-neutral-500"
+        >
+          {USER_PROFILE_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <p className="text-sm leading-6 text-neutral-500">
+          Usado no modo Local para ajustar o tom e o nível de detalhe dos
+          prompts.
+        </p>
       </div>
 
       <fieldset className="space-y-2">
