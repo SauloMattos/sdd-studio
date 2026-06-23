@@ -26,6 +26,11 @@ import {
   SDD_FORM_DRAFT_STORAGE_KEY,
   sddFormDraftToJson,
 } from "@/lib/sddFormDraft";
+import {
+  parseStoredSddSpec,
+  SDD_LAST_SPEC_STORAGE_KEY,
+  sddSpecToStorageJson,
+} from "@/lib/sddSpecStorage";
 
 type GenerationMode = "local" | "ai";
 
@@ -63,7 +68,7 @@ export function IdeaForm() {
     useState<GenerationMode>("local");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
-  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+  const [isLocalStorageLoaded, setIsLocalStorageLoaded] = useState(false);
 
   useEffect(() => {
     try {
@@ -74,19 +79,28 @@ export function IdeaForm() {
       if (draft) {
         setInput(draft);
       }
+
+      const storedSpec = parseStoredSddSpec(
+        window.localStorage.getItem(SDD_LAST_SPEC_STORAGE_KEY),
+      );
+
+      if (storedSpec) {
+        setSpec(storedSpec);
+      }
     } catch {
       try {
         window.localStorage.removeItem(SDD_FORM_DRAFT_STORAGE_KEY);
+        window.localStorage.removeItem(SDD_LAST_SPEC_STORAGE_KEY);
       } catch {
         // Ignore storage failures during restore.
       }
     } finally {
-      setIsDraftLoaded(true);
+      setIsLocalStorageLoaded(true);
     }
   }, []);
 
   useEffect(() => {
-    if (!isDraftLoaded) {
+    if (!isLocalStorageLoaded) {
       return;
     }
 
@@ -103,7 +117,27 @@ export function IdeaForm() {
     } catch {
       // Browsers may block storage in private modes. The app remains usable.
     }
-  }, [input, isDraftLoaded]);
+  }, [input, isLocalStorageLoaded]);
+
+  useEffect(() => {
+    if (!isLocalStorageLoaded) {
+      return;
+    }
+
+    try {
+      if (spec) {
+        window.localStorage.setItem(
+          SDD_LAST_SPEC_STORAGE_KEY,
+          sddSpecToStorageJson(spec),
+        );
+        return;
+      }
+
+      window.localStorage.removeItem(SDD_LAST_SPEC_STORAGE_KEY);
+    } catch {
+      // Browsers may block storage in private modes. The app remains usable.
+    }
+  }, [spec, isLocalStorageLoaded]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -153,6 +187,7 @@ export function IdeaForm() {
   const handleClearDraft = () => {
     try {
       window.localStorage.removeItem(SDD_FORM_DRAFT_STORAGE_KEY);
+      window.localStorage.removeItem(SDD_LAST_SPEC_STORAGE_KEY);
     } catch {
       // Keep the reset behavior even if storage is unavailable.
     }
