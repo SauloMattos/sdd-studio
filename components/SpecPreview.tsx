@@ -1,3 +1,5 @@
+import { CopyButton } from "@/components/CopyButton";
+import { sddSpecToMarkdown } from "@/lib/sddSpecToMarkdown";
 import type { SddSpec } from "@/types/sdd";
 
 interface SpecPreviewProps {
@@ -27,6 +29,8 @@ function SpecSection({ title, items, children }: SpecSectionProps) {
 }
 
 export function SpecPreview({ spec }: SpecPreviewProps) {
+  const markdown = spec ? sddSpecToMarkdown(spec) : "";
+
   return (
     <section
       aria-label="Spec preview"
@@ -34,13 +38,20 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
     >
       {spec ? (
         <article className="space-y-6">
-          <header className="space-y-2 border-b border-neutral-800 pb-4">
-            <p className="text-xs font-medium uppercase text-neutral-500">
-              {spec.taskType}
-            </p>
-            <h2 className="text-xl font-semibold text-neutral-100">
-              {spec.title}
-            </h2>
+          <header className="flex flex-col gap-4 border-b border-neutral-800 pb-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-medium uppercase text-neutral-500">
+                {spec.taskType}
+              </p>
+              <h2 className="text-xl font-semibold text-neutral-100">
+                {spec.title}
+              </h2>
+            </div>
+            <CopyButton
+              text={markdown}
+              label="Copy Markdown"
+              className="w-full min-w-[8.5rem] sm:w-auto"
+            />
           </header>
 
           <SpecSection title="Summary">
@@ -69,10 +80,28 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
             title="Implementation Plan"
             items={spec.implementationPlan}
           />
-          <SpecSection
-            title="Suggested Agent Prompts"
-            items={spec.suggestedAgentPrompts}
-          />
+          <SpecSection title="Suggested Agent Prompts">
+            <ol className="space-y-3 text-sm leading-6 text-neutral-300">
+              {spec.suggestedAgentPrompts.map((prompt, index) => (
+                <li
+                  key={prompt}
+                  className="grid gap-2 rounded-md border border-neutral-800 bg-neutral-950/40 p-3 sm:grid-cols-[1fr_auto] sm:items-start"
+                >
+                  <p>
+                    <span className="mr-2 font-mono text-xs font-semibold text-neutral-500">
+                      {index + 1}.
+                    </span>
+                    {prompt}
+                  </p>
+                  <CopyButton
+                    text={prompt}
+                    label="Copy prompt"
+                    className="w-full min-w-[6.75rem] sm:w-auto"
+                  />
+                </li>
+              ))}
+            </ol>
+          </SpecSection>
           <SpecSection title="Test Checklist" items={spec.testChecklist} />
           <SpecSection
             title="Risks and Edge Cases"
