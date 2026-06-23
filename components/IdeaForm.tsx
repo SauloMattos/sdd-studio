@@ -7,7 +7,12 @@ import {
   type SddSpec,
   type TaskType,
 } from "@/types/sdd";
+import { IdeaQualityPanel } from "@/components/IdeaQualityPanel";
 import { SpecPreview } from "@/components/SpecPreview";
+import {
+  evaluateIdeaInput,
+  shouldEvaluateIdeaInput,
+} from "@/lib/evaluateIdeaInput";
 import { generateMockSddSpec } from "@/lib/generateMockSddSpec";
 
 const INITIAL_INPUT: SddInput = {
@@ -25,10 +30,13 @@ export function IdeaForm() {
   };
 
   const isDisabled = input.idea.trim().length === 0;
+  const ideaEvaluation = shouldEvaluateIdeaInput(input.idea)
+    ? evaluateIdeaInput(input.idea)
+    : null;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
+      <div className="space-y-3">
         <label htmlFor="idea" className="block text-sm font-medium">
           Your idea
         </label>
@@ -43,6 +51,9 @@ export function IdeaForm() {
           placeholder="Describe the software idea you have in mind..."
           className="w-full resize-y rounded-lg border border-neutral-800 bg-neutral-900 p-3 text-sm outline-none placeholder:text-neutral-600 focus:border-neutral-500"
         />
+        {ideaEvaluation ? (
+          <IdeaQualityPanel evaluation={ideaEvaluation} />
+        ) : null}
       </div>
 
       <div className="space-y-2">
