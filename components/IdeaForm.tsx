@@ -8,6 +8,7 @@ import {
   type TaskType,
 } from "@/types/sdd";
 import { SpecPreview } from "@/components/SpecPreview";
+import { generateMockSddSpec } from "@/lib/generateMockSddSpec";
 
 const INITIAL_INPUT: SddInput = {
   idea: "",
@@ -20,9 +21,7 @@ export function IdeaForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // No API integration yet. Generation will be wired up in a later step.
-    // For now we simply keep the preview area in its empty state.
-    setSpec(null);
+    setSpec(generateMockSddSpec(input));
   };
 
   const isDisabled = input.idea.trim().length === 0;

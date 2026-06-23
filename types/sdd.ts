@@ -41,7 +41,6 @@ export interface AcceptanceCriterion {
 
 /**
  * The structured specification produced from an SddInput.
- * (Generation is not implemented in this first step.)
  */
 export interface SddSpec {
   title: string;
@@ -50,5 +49,8 @@ export interface SddSpec {
   goals: string[];
   nonGoals: string[];
   acceptanceCriteria: AcceptanceCriterion[];
-  testPlan: string[];
+  implementationPlan: string[];
+  suggestedAgentPrompts: string[];
+  testChecklist: string[];
+  risksAndEdgeCases: string[];
 }
