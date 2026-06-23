@@ -7,12 +7,14 @@ import {
   type SddSpec,
   type TaskType,
 } from "@/types/sdd";
+import { ExampleIdeas } from "@/components/ExampleIdeas";
 import { IdeaQualityPanel } from "@/components/IdeaQualityPanel";
 import { SpecPreview } from "@/components/SpecPreview";
 import {
   evaluateIdeaInput,
   shouldEvaluateIdeaInput,
 } from "@/lib/evaluateIdeaInput";
+import { EXAMPLE_IDEAS, type ExampleIdea } from "@/lib/exampleIdeas";
 import { generateMockSddSpec } from "@/lib/generateMockSddSpec";
 
 const INITIAL_INPUT: SddInput = {
@@ -27,6 +29,14 @@ export function IdeaForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSpec(generateMockSddSpec(input));
+  };
+
+  const handleExampleSelect = (example: ExampleIdea) => {
+    setInput({
+      idea: example.idea,
+      taskType: example.taskType,
+    });
+    setSpec(null);
   };
 
   const isDisabled = input.idea.trim().length === 0;
@@ -55,6 +65,11 @@ export function IdeaForm() {
           <IdeaQualityPanel evaluation={ideaEvaluation} />
         ) : null}
       </div>
+
+      <ExampleIdeas
+        examples={EXAMPLE_IDEAS}
+        onSelect={handleExampleSelect}
+      />
 
       <div className="space-y-2">
         <label htmlFor="taskType" className="block text-sm font-medium">
