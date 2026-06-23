@@ -86,26 +86,33 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
             items={spec.implementationPlan}
           />
           <SpecSection title="Prompts sugeridos para agente">
-            <ol className="space-y-3 text-sm leading-6 text-neutral-300">
-              {spec.suggestedAgentPrompts.map((prompt, index) => (
-                <li
-                  key={prompt}
-                  className="grid gap-2 rounded-md border border-neutral-800 bg-neutral-950/40 p-3 sm:grid-cols-[1fr_auto] sm:items-start"
-                >
-                  <p className="whitespace-pre-line">
-                    <span className="mr-2 font-mono text-xs font-semibold text-neutral-500">
-                      {index + 1}.
-                    </span>
-                    {prompt}
-                  </p>
-                  <CopyButton
-                    text={prompt}
-                    label="Copiar prompt"
-                    className="w-full min-w-[6.75rem] sm:w-auto"
-                  />
-                </li>
-              ))}
-            </ol>
+            <div className="space-y-3">
+              <p className="rounded-md border border-neutral-800 bg-neutral-950/40 p-3 text-sm leading-6 text-neutral-300">
+                Use estes prompts em sequência. Copie o primeiro, execute na IA
+                escolhida, valide o resultado e só então avance para o próximo.
+                Isso reduz escopo, retrabalho e gasto de tokens.
+              </p>
+              <ol className="space-y-3 text-sm leading-6 text-neutral-300">
+                {spec.suggestedAgentPrompts.map((prompt, index) => (
+                  <li
+                    key={prompt}
+                    className="space-y-3 rounded-md border border-neutral-800 bg-neutral-950/40 p-3"
+                  >
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="font-mono text-xs font-semibold uppercase text-neutral-500">
+                        Etapa {index + 1}
+                      </p>
+                      <CopyButton
+                        text={prompt}
+                        label="Copiar prompt"
+                        className="w-full min-w-[6.75rem] sm:w-auto"
+                      />
+                    </div>
+                    <p className="whitespace-pre-line">{prompt}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </SpecSection>
           <SpecSection title="Checklist de testes" items={spec.testChecklist} />
           <SpecSection
