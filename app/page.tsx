@@ -20,6 +20,18 @@ export default function Home() {
           Use o modo local para estruturar sua ideia, copiar os prompts e colar
           no ChatGPT, Claude, Cursor, Codex ou Claude Code.
         </p>
+        <p className="text-sm leading-6 text-neutral-500">
+          Projeto open source para estudar, usar e contribuir.{" "}
+          <a
+            href="https://github.com/SauloMattos/sdd-studio"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-neutral-200 underline underline-offset-4 transition hover:text-white"
+          >
+            Ver no GitHub
+          </a>
+          .
+        </p>
       </header>
 
       <section
