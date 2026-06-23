@@ -1,4 +1,6 @@
 import { CopyButton } from "@/components/CopyButton";
+import { SpecQualityPanel } from "@/components/SpecQualityPanel";
+import { evaluateSddSpec } from "@/lib/evaluateSddSpec";
 import { sddSpecToMarkdown } from "@/lib/sddSpecToMarkdown";
 import type { SddSpec } from "@/types/sdd";
 
@@ -30,6 +32,7 @@ function SpecSection({ title, items, children }: SpecSectionProps) {
 
 export function SpecPreview({ spec }: SpecPreviewProps) {
   const markdown = spec ? sddSpecToMarkdown(spec) : "";
+  const evaluation = spec ? evaluateSddSpec(spec) : null;
 
   return (
     <section
@@ -53,6 +56,8 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
               className="w-full min-w-[8.5rem] sm:w-auto"
             />
           </header>
+
+          {evaluation ? <SpecQualityPanel evaluation={evaluation} /> : null}
 
           <SpecSection title="Summary">
             <p className="text-sm leading-6 text-neutral-300">
