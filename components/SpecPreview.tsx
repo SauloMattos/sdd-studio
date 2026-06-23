@@ -92,7 +92,7 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
                   key={prompt}
                   className="grid gap-2 rounded-md border border-neutral-800 bg-neutral-950/40 p-3 sm:grid-cols-[1fr_auto] sm:items-start"
                 >
-                  <p>
+                  <p className="whitespace-pre-line">
                     <span className="mr-2 font-mono text-xs font-semibold text-neutral-500">
                       {index + 1}.
                     </span>
