@@ -1,26 +1,37 @@
 # SDD Studio
 
-SDD Studio é uma ferramenta open source local-first para transformar ideias vagas de software em prompts SDD pequenos, claros, testáveis e econômicos em tokens.
+SDD Studio é uma ferramenta open source local-first para transformar ideias vagas de software em prompts SDD pequenos, claros, testáveis e prontos para copiar em qualquer IA.
 
-A tese do produto é simples: antes de pedir código a uma IA, vale preparar melhor o pedido. O SDD Studio ajuda você a estruturar a ideia, copiar o prompt e colar na IA que já usa, como ChatGPT, Claude, Cursor, Codex ou Claude Code.
+A tese do produto é simples: antes de pedir código a uma IA, vale preparar melhor o pedido. O SDD Studio ajuda você a estruturar a ideia, quebrar o trabalho em etapas menores e copiar prompts para ChatGPT, Claude, Cursor, Codex, Claude Code ou outra IA que você já usa.
 
-O fluxo principal funciona sem login, sem banco, sem billing e sem `OPENAI_API_KEY`. A integração direta com IA existe como recurso experimental para quem clonar o projeto e configurar a própria chave no servidor.
+O fluxo principal funciona sem login, sem banco, sem billing e sem `OPENAI_API_KEY`. A demo pública pode ser usada diretamente no modo Local.
+
+## Para quem é
+
+O SDD Studio foi pensado para três perfis:
+
+- **Iniciante:** precisa de prompts mais didáticos, com contexto e orientação de validação.
+- **Dev experiente:** quer prompts objetivos, técnicos e sem enrolação.
+- **Usuário comum:** quer criar pequenos projetos com ajuda de IA, usando linguagem simples e menos jargão técnico.
+
+O seletor de perfil ajusta o tom dos prompts gerados no modo Local.
 
 ## Status atual
-
-Este projeto ainda está em estágio inicial.
 
 Funciona hoje:
 
 - Digitar uma ideia inicial de software.
+- Escolher perfil: Iniciante, Dev experiente ou Usuário comum.
+- Usar exemplos clicáveis organizados por perfil.
 - Avaliar localmente a qualidade da ideia.
-- Gerar uma Spec SDD localmente, sem API paga.
-- Usar uma rota experimental de geração com IA quando `OPENAI_API_KEY` está configurada no servidor.
-- Revisar a spec gerada em seções estruturadas.
+- Gerar uma Spec SDD localmente, sem API key.
+- Revisar prompts sugeridos como etapas sequenciais.
 - Avaliar localmente a qualidade da spec gerada.
-- Copiar a spec completa como Markdown.
-- Copiar prompts individuais sugeridos para agente.
-- Rodar testes unitários para heurísticas, contrato de IA e conversão para Markdown.
+- Copiar um prompt individual por vez.
+- Copiar a spec completa em Markdown.
+- Copiar um pacote pronto para colar no ChatGPT/Claude.
+- Usar uma rota experimental de geração com IA quando `OPENAI_API_KEY` está configurada no servidor.
+- Rodar testes unitários para heurísticas, contrato de IA, exports e rota backend.
 
 Ainda não existe:
 
@@ -32,23 +43,38 @@ Ainda não existe:
 
 O modo Local é o fluxo principal e recomendado. Ele é determinístico e continua funcionando mesmo quando a integração com IA não está configurada.
 
-## Fluxo do produto
+## Como usar
 
-1. Escreva uma ideia bruta para uma tarefa de software.
-2. Revise o painel local de qualidade da ideia.
-3. Melhore a entrada se fizer sentido.
-4. Gere uma Spec SDD no modo Local recomendado.
-5. Revise as seções da spec:
-   - Resumo
-   - Objetivos
-   - Fora de escopo
-   - Critérios de aceite
-   - Plano de implementação
-   - Prompts sugeridos para agente
-   - Checklist de testes
-   - Riscos e casos de borda
-6. Revise o painel local de qualidade da spec.
-7. Copie a spec em Markdown ou prompts individuais para a IA que você já usa.
+1. Descreva sua ideia do jeito que conseguir.
+2. Escolha seu perfil para ajustar o nível de detalhe.
+3. Gere a Spec SDD no modo Local.
+4. Copie um prompt por vez ou copie o pacote para ChatGPT/Claude.
+
+Os prompts devem ser usados em sequência. Comece pelo Prompt 1, valide o resultado e só depois avance para o próximo. Isso reduz escopo, retrabalho e gasto de tokens.
+
+## Exemplos por perfil
+
+Os exemplos clicáveis ajudam a entender rapidamente como escrever uma boa ideia inicial.
+
+- **Iniciante:** exemplo de primeira tela de login em React.
+- **Dev experiente:** exemplo de refatoração de componente React grande.
+- **Usuário comum:** exemplo de app simples para controlar gastos do mês.
+
+Ao clicar em um exemplo, o formulário preenche a ideia, o tipo de tarefa e o perfil recomendado. A spec não é gerada automaticamente; você ainda clica em `Gerar Spec SDD`.
+
+## Formas de cópia
+
+Depois de gerar a spec, você pode copiar a saída de três formas:
+
+- **Prompt individual:** melhor para executar uma etapa pequena por vez.
+- **Markdown completo:** útil para documentação, issues, PRs ou revisão técnica.
+- **Pacote para ChatGPT/Claude:** texto pronto para colar em uma IA conversacional, com instruções para trabalhar em etapas e aguardar validação antes de avançar.
+
+## Modo IA experimental
+
+O modo IA integrado é experimental e BYOK. Ele só funciona para quem clonar o projeto e configurar `OPENAI_API_KEY` no servidor.
+
+Esse modo não é necessário para usar a demo pública. O produto principal é local-first: o SDD Studio prepara prompts melhores para a IA que você já usa, sem precisar chamar uma IA por você.
 
 ## Por que existe
 
@@ -59,8 +85,9 @@ Agentes de código com IA são mais úteis quando o trabalho está bem enquadrad
 - Os critérios de aceite são testáveis.
 - Os itens fora de escopo são explícitos.
 - O prompt de handoff é conciso.
+- A execução acontece em etapas verificáveis.
 
-SDD Studio foca nessa camada de preparação. A integração com IA é opcional e BYOK, não a base do produto.
+SDD Studio foca nessa camada de preparação. A integração com IA é opcional, não a base do produto.
 
 ## Tech Stack
 
@@ -71,33 +98,33 @@ SDD Studio foca nessa camada de preparação. A integração com IA é opcional 
 - Vitest
 - npm
 
-## Local Development
+## Desenvolvimento local
 
-Install dependencies:
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-Start the development server:
+Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Open the app:
+Abra o app:
 
 ```text
 http://localhost:3000
 ```
 
-Run the TypeScript check:
+Rode a checagem TypeScript:
 
 ```bash
 npm run typecheck
 ```
 
-Run unit tests:
+Rode os testes unitários:
 
 ```bash
 npm run test
@@ -105,14 +132,15 @@ npm run test
 
 ## Scripts
 
-| Script | Description |
+| Script | Descrição |
 | --- | --- |
-| `npm run dev` | Starts the local Next.js development server. |
-| `npm run build` | Builds the Next.js app for production. |
-| `npm run start` | Starts the production server after a build. |
-| `npm run lint` | Runs the configured Next.js lint command. |
-| `npm run typecheck` | Runs TypeScript with `tsc --noEmit`. |
-| `npm run test` | Runs unit tests with Vitest. |
+| `npm run dev` | Inicia o servidor local do Next.js. |
+| `npm run build` | Gera o build de produção. |
+| `npm run start` | Inicia o servidor de produção após o build. |
+| `npm run lint` | Roda o comando de lint configurado pelo Next.js. |
+| `npm run typecheck` | Roda TypeScript com `tsc --noEmit`. |
+| `npm run test` | Roda os testes unitários com Vitest. |
+| `npm run ship -- "mensagem do commit"` | Executa `git add .`, `git commit -m` e `git push`. |
 
 ## Variáveis de ambiente
 
@@ -120,37 +148,40 @@ Nenhuma variável de ambiente é necessária para usar o fluxo principal no modo
 
 A rota experimental `POST /api/generate-spec` exige `OPENAI_API_KEY` quando chamada no modo IA. Essa chave deve existir apenas no servidor. Nunca exponha `OPENAI_API_KEY` no client.
 
-## Project Structure
+## Estrutura do projeto
 
 ```text
-app/          Next.js app routes and global styles
-components/   UI components for the local workflow
-lib/          Pure domain functions and formatters
-tests/        Unit tests for domain functions
-types/        Shared TypeScript domain types
+app/          Rotas Next.js e estilos globais
+components/   Componentes de UI do fluxo principal
+lib/          Funções puras de domínio, geração local e formatadores
+tests/        Testes unitários
+types/        Tipos TypeScript compartilhados
 ```
 
-## Testing Scope
+## Escopo de testes
 
-Current tests cover pure domain behavior and the backend AI route contract:
+Os testes atuais cobrem comportamento de domínio e contrato backend:
 
-- Idea-quality evaluation heuristics.
-- Mock SDD spec generation.
-- Spec-quality evaluation heuristics.
-- Markdown export formatting.
-- AI prompt contract and response parsing.
-- API route error handling without external calls.
+- Heurísticas de avaliação da ideia.
+- Geração local da Spec SDD.
+- Perfis de usuário no gerador local.
+- Exemplos clicáveis por perfil.
+- Avaliação de qualidade da spec.
+- Export em Markdown.
+- Pacote para ChatGPT/Claude.
+- Contrato de prompt e parsing de resposta de IA.
+- Rota backend sem chamadas externas nos testes.
 
-React component tests and end-to-end tests are not part of the current test suite yet.
+Testes de componentes React e testes end-to-end ainda não fazem parte da suíte atual.
 
 ## Roadmap
 
-See [ROADMAP.md](./ROADMAP.md).
+Veja [ROADMAP.md](./ROADMAP.md).
 
-## Contributing
+## Contribuindo
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Veja [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-## License
+## Licença
 
-MIT License. See [LICENSE](./LICENSE).
+MIT License. Veja [LICENSE](./LICENSE).
