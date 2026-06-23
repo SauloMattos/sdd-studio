@@ -180,8 +180,8 @@ describe("POST /api/generate-spec", () => {
     const body = await response.json();
 
     expect(response.status).toBe(502);
-    expect(body.error).toBe(
-      "Não foi possível gerar uma Spec SDD válida com IA. Tente novamente.",
+    expect(body.error).toContain(
+      "Erro interno ao gerar Spec SDD com IA:",
     );
   });
 });

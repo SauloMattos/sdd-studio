@@ -1,6 +1,6 @@
 # Roadmap
 
-SDD Studio is early-stage. This roadmap is intentionally split into small phases so the project can evolve without overbuilding.
+SDD Studio is early-stage and local-first. This roadmap is intentionally split into small phases so the project can evolve without overbuilding or making paid AI APIs required for the public demo.
 
 The order may change as the workflow becomes clearer.
 
@@ -19,7 +19,7 @@ Status: in progress
 
 ## Phase 1: Stronger Local SDD Model
 
-Goal: make the local workflow more useful before adding any AI provider.
+Goal: make the recommended local workflow more useful as the main product experience.
 
 Planned improvements:
 
@@ -27,6 +27,7 @@ Planned improvements:
 - Make missing-information suggestions more actionable.
 - Add more task-type-aware spec structure.
 - Improve Markdown output for easier handoff to coding agents.
+- Improve the local generator so public demo users get better prompts without API keys.
 - Add more unit tests around edge cases and scoring boundaries.
 
 ## Phase 2: Better Handoff Workflows
@@ -43,7 +44,7 @@ Possible improvements:
 
 ## Phase 3: Optional AI Provider Integration
 
-Goal: add real AI-assisted generation only after the local workflow is stable.
+Goal: keep integrated AI generation as an explicit advanced/BYOK path while the local workflow remains the default.
 
 Important constraints:
 
@@ -51,8 +52,9 @@ Important constraints:
 - Secrets must stay server-side or local-only.
 - The app should still work without external provider credentials.
 - The local deterministic workflow should remain testable.
+- The public demo should not require login, billing, or API keys.
 
-Possible providers may include OpenAI, Anthropic, or other tools, but no provider integration exists today.
+OpenAI generation exists as an experimental server-side route for cloned deployments with `OPENAI_API_KEY`. Future provider work should not make integrated AI necessary for the core copy-and-paste workflow.
 
 ## Phase 4: Persistence and Collaboration
 
@@ -72,5 +74,6 @@ These ideas are not implemented and should not be assumed as committed scope.
 - Do not add a database before the local workflow is proven.
 - Do not add authentication before there is a clear multi-user need.
 - Do not make provider integration required.
+- Do not make the public demo depend on paid API quota.
 - Do not turn the app into a generic chat interface.
 - Do not optimize for long planning documents over small, testable specs.

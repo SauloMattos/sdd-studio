@@ -29,8 +29,8 @@ const GENERATION_MODE_OPTIONS: ReadonlyArray<{
   value: GenerationMode;
   label: string;
 }> = [
-  { value: "local", label: "Local" },
-  { value: "ai", label: "IA" },
+  { value: "local", label: "Local — recomendado" },
+  { value: "ai", label: "IA — experimental" },
 ];
 
 export function IdeaForm() {
@@ -138,7 +138,11 @@ export function IdeaForm() {
 
       <fieldset className="space-y-2">
         <legend className="block text-sm font-medium">Modo de geração</legend>
-        <div className="grid grid-cols-2 rounded-lg border border-neutral-800 bg-neutral-900 p-1">
+        <p className="text-sm leading-6 text-neutral-500">
+          O SDD Studio não precisa chamar uma IA por você. Ele prepara prompts
+          melhores para a IA que você já usa.
+        </p>
+        <div className="grid gap-1 rounded-lg border border-neutral-800 bg-neutral-900 p-1 sm:grid-cols-2">
           {GENERATION_MODE_OPTIONS.map((option) => {
             const isSelected = generationMode === option.value;
 
@@ -166,6 +170,18 @@ export function IdeaForm() {
               </label>
             );
           })}
+        </div>
+        <div className="space-y-1 text-sm leading-6 text-neutral-500">
+          <p>
+            <strong className="font-semibold text-neutral-300">Local:</strong>{" "}
+            gratuito, sem API key e ideal para copiar prompts e usar em
+            qualquer IA.
+          </p>
+          <p>
+            <strong className="font-semibold text-neutral-300">IA:</strong>{" "}
+            recurso avançado que requer OPENAI_API_KEY configurada no servidor.
+            Não é necessário para usar a demo pública.
+          </p>
         </div>
       </fieldset>
 

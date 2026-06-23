@@ -1,64 +1,66 @@
 # SDD Studio
 
-SDD Studio is an early-stage open source workflow tool for turning vague software ideas into small, testable, token-efficient specs for AI coding agents.
+SDD Studio é uma ferramenta open source local-first para transformar ideias vagas de software em prompts SDD pequenos, claros, testáveis e econômicos em tokens.
 
-The core idea is simple: better preparation before using tools like ChatGPT, Codex, Claude Code, Cursor, or other coding agents should lead to clearer implementation work, smaller prompts, and more predictable reviews.
+A tese do produto é simples: antes de pedir código a uma IA, vale preparar melhor o pedido. O SDD Studio ajuda você a estruturar a ideia, copiar o prompt e colar na IA que já usa, como ChatGPT, Claude, Cursor, Codex ou Claude Code.
 
-SDD Studio is not just a prompt generator. It is a local-first workflow builder for shaping the work before handing it to an agent.
+O fluxo principal funciona sem login, sem banco, sem billing e sem `OPENAI_API_KEY`. A integração direta com IA existe como recurso experimental para quem clonar o projeto e configurar a própria chave no servidor.
 
-## Current Status
+## Status atual
 
-This project is intentionally early-stage.
+Este projeto ainda está em estágio inicial.
 
-What works today:
+Funciona hoje:
 
-- Type an initial software idea.
-- Get a local deterministic quality evaluation for the idea.
-- Generate a mock SDD spec locally.
-- Review the generated spec in structured sections.
-- Get a local deterministic quality evaluation for the generated spec.
-- Copy the full spec as Markdown.
-- Copy individual suggested agent prompts.
-- Run unit tests for the domain heuristics and Markdown conversion.
+- Digitar uma ideia inicial de software.
+- Avaliar localmente a qualidade da ideia.
+- Gerar uma Spec SDD localmente, sem API paga.
+- Usar uma rota experimental de geração com IA quando `OPENAI_API_KEY` está configurada no servidor.
+- Revisar a spec gerada em seções estruturadas.
+- Avaliar localmente a qualidade da spec gerada.
+- Copiar a spec completa como Markdown.
+- Copiar prompts individuais sugeridos para agente.
+- Rodar testes unitários para heurísticas, contrato de IA e conversão para Markdown.
 
-What does not exist yet:
+Ainda não existe:
 
-- No database.
-- No authentication.
-- No persistence.
-- No UI integration with the AI generation route yet.
+- Banco de dados.
+- Autenticação.
+- Persistência.
+- Billing.
+- Streaming.
 
-All current generation and evaluation logic runs locally and deterministically.
+O modo Local é o fluxo principal e recomendado. Ele é determinístico e continua funcionando mesmo quando a integração com IA não está configurada.
 
-## Product Flow
+## Fluxo do produto
 
-1. Write a raw idea for a software task.
-2. Review the local idea-quality panel.
-3. Improve the input if useful.
-4. Generate a mock SDD spec.
-5. Review the spec sections:
-   - Summary
-   - Goals
-   - Non-goals
-   - Acceptance Criteria
-   - Implementation Plan
-   - Suggested Agent Prompts
-   - Test Checklist
-   - Risks and Edge Cases
-6. Review the local spec-quality panel.
-7. Copy the full Markdown spec or individual prompts into your coding-agent workflow.
+1. Escreva uma ideia bruta para uma tarefa de software.
+2. Revise o painel local de qualidade da ideia.
+3. Melhore a entrada se fizer sentido.
+4. Gere uma Spec SDD no modo Local recomendado.
+5. Revise as seções da spec:
+   - Resumo
+   - Objetivos
+   - Fora de escopo
+   - Critérios de aceite
+   - Plano de implementação
+   - Prompts sugeridos para agente
+   - Checklist de testes
+   - Riscos e casos de borda
+6. Revise o painel local de qualidade da spec.
+7. Copie a spec em Markdown ou prompts individuais para a IA que você já usa.
 
-## Why This Exists
+## Por que existe
 
-AI coding agents are more useful when the work is framed clearly:
+Agentes de código com IA são mais úteis quando o trabalho está bem enquadrado:
 
-- The goal is specific.
-- The scope is small.
-- The acceptance criteria are testable.
-- Non-goals are explicit.
-- The handoff prompt is concise.
+- O objetivo é específico.
+- O escopo é pequeno.
+- Os critérios de aceite são testáveis.
+- Os itens fora de escopo são explícitos.
+- O prompt de handoff é conciso.
 
-SDD Studio focuses on that preparation layer. The planned AI integration is an enhancement, not the foundation of the product.
+SDD Studio foca nessa camada de preparação. A integração com IA é opcional e BYOK, não a base do produto.
 
 ## Tech Stack
 
@@ -112,12 +114,11 @@ npm run test
 | `npm run typecheck` | Runs TypeScript with `tsc --noEmit`. |
 | `npm run test` | Runs unit tests with Vitest. |
 
-## Environment Variables
+## Variáveis de ambiente
 
-The current UI still uses local mock generation. The backend AI route
-`POST /api/generate-spec` requires `OPENAI_API_KEY` when called.
+Nenhuma variável de ambiente é necessária para usar o fluxo principal no modo Local.
 
-Do not expose `OPENAI_API_KEY` in client-side code.
+A rota experimental `POST /api/generate-spec` exige `OPENAI_API_KEY` quando chamada no modo IA. Essa chave deve existir apenas no servidor. Nunca exponha `OPENAI_API_KEY` no client.
 
 ## Project Structure
 
@@ -131,12 +132,14 @@ types/        Shared TypeScript domain types
 
 ## Testing Scope
 
-Current tests cover pure domain behavior:
+Current tests cover pure domain behavior and the backend AI route contract:
 
 - Idea-quality evaluation heuristics.
 - Mock SDD spec generation.
 - Spec-quality evaluation heuristics.
 - Markdown export formatting.
+- AI prompt contract and response parsing.
+- API route error handling without external calls.
 
 React component tests and end-to-end tests are not part of the current test suite yet.
 

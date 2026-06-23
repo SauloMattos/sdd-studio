@@ -6,8 +6,12 @@ export default function Home() {
       <header className="space-y-3">
         <h1 className="text-4xl font-bold tracking-tight">SDD Studio</h1>
         <p className="text-lg text-neutral-400">
-          Transforme ideias vagas em specs pequenas, testáveis e prontas para
-          agentes de código com IA.
+          Transforme ideias vagas em prompts SDD prontos para usar em qualquer
+          IA.
+        </p>
+        <p className="text-sm leading-6 text-neutral-500">
+          Use o modo local para estruturar sua ideia, copiar os prompts e colar
+          no ChatGPT, Claude, Cursor, Codex ou Claude Code.
         </p>
       </header>
 

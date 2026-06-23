@@ -80,9 +80,14 @@ export async function POST(request: Request) {
     const spec = parseAiSddSpec(response.output_parsed ?? response.output_text);
 
     return NextResponse.json(spec);
-  } catch {
+  } catch (error) {
+    console.error("[generate-spec] Failed to generate AI spec:", error);
+
+    const message =
+      error instanceof Error ? error.message : "Erro desconhecido.";
+
     return jsonError(
-      "Não foi possível gerar uma Spec SDD válida com IA. Tente novamente.",
+      `Erro interno ao gerar Spec SDD com IA: ${message}`,
       502,
     );
   }

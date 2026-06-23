@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SDD Studio",
   description:
-    "Transforme ideias vagas em specs pequenas, testáveis e prontas para agentes de código com IA.",
+    "Transforme ideias vagas em prompts SDD prontos para copiar e usar em qualquer IA.",
 };
 
 export default function RootLayout({
