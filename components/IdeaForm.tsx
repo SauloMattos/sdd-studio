@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DEFAULT_USER_PROFILE,
   TASK_TYPE_OPTIONS,
@@ -21,6 +21,11 @@ import {
 import { EXAMPLE_IDEAS, type ExampleIdea } from "@/lib/exampleIdeas";
 import { generateMockSddSpec } from "@/lib/generateMockSddSpec";
 import { requestAiSddSpec } from "@/lib/requestAiSddSpec";
+import {
+  parseSddFormDraft,
+  SDD_FORM_DRAFT_STORAGE_KEY,
+  sddFormDraftToJson,
+} from "@/lib/sddFormDraft";
 
 type GenerationMode = "local" | "ai";
 
@@ -42,6 +47,15 @@ const GENERATION_MODE_OPTIONS: ReadonlyArray<{
   { value: "ai", label: "IA — experimental" },
 ];
 
+function hasDraftContent(input: LocalSddInput): boolean {
+  return (
+    input.idea.trim().length > 0 ||
+    input.taskType !== INITIAL_LOCAL_INPUT.taskType ||
+    (input.userProfile ?? DEFAULT_USER_PROFILE) !==
+      INITIAL_LOCAL_INPUT.userProfile
+  );
+}
+
 export function IdeaForm() {
   const [input, setInput] = useState<LocalSddInput>(INITIAL_LOCAL_INPUT);
   const [spec, setSpec] = useState<SddSpec | null>(null);
@@ -49,6 +63,47 @@ export function IdeaForm() {
     useState<GenerationMode>("local");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const draft = parseSddFormDraft(
+        window.localStorage.getItem(SDD_FORM_DRAFT_STORAGE_KEY),
+      );
+
+      if (draft) {
+        setInput(draft);
+      }
+    } catch {
+      try {
+        window.localStorage.removeItem(SDD_FORM_DRAFT_STORAGE_KEY);
+      } catch {
+        // Ignore storage failures during restore.
+      }
+    } finally {
+      setIsDraftLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isDraftLoaded) {
+      return;
+    }
+
+    try {
+      if (hasDraftContent(input)) {
+        window.localStorage.setItem(
+          SDD_FORM_DRAFT_STORAGE_KEY,
+          sddFormDraftToJson(input),
+        );
+        return;
+      }
+
+      window.localStorage.removeItem(SDD_FORM_DRAFT_STORAGE_KEY);
+    } catch {
+      // Browsers may block storage in private modes. The app remains usable.
+    }
+  }, [input, isDraftLoaded]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -91,6 +146,18 @@ export function IdeaForm() {
       taskType: example.taskType,
       userProfile: example.userProfile,
     }));
+    setSpec(null);
+    setGenerationError(null);
+  };
+
+  const handleClearDraft = () => {
+    try {
+      window.localStorage.removeItem(SDD_FORM_DRAFT_STORAGE_KEY);
+    } catch {
+      // Keep the reset behavior even if storage is unavailable.
+    }
+
+    setInput(INITIAL_LOCAL_INPUT);
     setSpec(null);
     setGenerationError(null);
   };
@@ -234,6 +301,14 @@ export function IdeaForm() {
         className="rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-semibold text-neutral-900 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
       >
         {isGenerating ? "Gerando com IA..." : "Gerar Spec SDD"}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleClearDraft}
+        className="text-sm font-medium text-neutral-500 underline underline-offset-4 transition hover:text-neutral-200"
+      >
+        Limpar rascunho salvo
       </button>
 
       {isGenerating ? (
