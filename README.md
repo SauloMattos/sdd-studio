@@ -70,6 +70,12 @@ Depois de gerar a spec, você pode copiar a saída de três formas:
 - **Markdown completo:** útil para documentação, issues, PRs ou revisão técnica.
 - **Pacote para ChatGPT/Claude:** texto pronto para colar em uma IA conversacional, com instruções para trabalhar em etapas e aguardar validação antes de avançar.
 
+## Qualidade da spec
+
+Além de gerar a Spec SDD, o SDD Studio faz uma avaliação local simples da qualidade da saída antes da cópia. Essa avaliação não usa IA, API externa ou chamadas pagas.
+
+O objetivo é dar um sinal prático sobre clareza, tamanho do escopo, critérios de aceite, passos testáveis e contexto suficiente para uma coding AI continuar o trabalho. É uma heurística de apoio para revisar a spec, não uma garantia de qualidade nem substitui revisão humana.
+
 ## Modo IA experimental
 
 O modo IA integrado é experimental e BYOK. Ele só funciona para quem clonar o projeto e configurar `OPENAI_API_KEY` no servidor.
