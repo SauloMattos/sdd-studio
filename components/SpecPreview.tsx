@@ -71,8 +71,6 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
             </div>
           </header>
 
-          {evaluation ? <SpecQualityPanel evaluation={evaluation} /> : null}
-
           <SpecSection title="Resumo">
             <p className="text-sm leading-6 text-neutral-300">
               {spec.summary}
@@ -133,6 +131,8 @@ export function SpecPreview({ spec }: SpecPreviewProps) {
             title="Riscos e casos de borda"
             items={spec.risksAndEdgeCases}
           />
+
+          {evaluation ? <SpecQualityPanel evaluation={evaluation} /> : null}
         </article>
       ) : (
         <div className="flex h-full min-h-[9rem] items-center justify-center text-center text-sm text-neutral-500">
